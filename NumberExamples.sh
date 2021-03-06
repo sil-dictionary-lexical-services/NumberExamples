@@ -23,13 +23,13 @@ barefname=${fwdatafile%.fwdata}
 # echo "barefname $barefname fwdatafile $fwdatafile"
 mv "$fwdatafile" "$barefname-before.fwdata"
 
-mv PromoteSubentries.ini  PromoteSubentries.bak
-perl -pE "s/FwdataIn.*/FwdataIn=$barefname-before.fwdata/; s/FwdataOut.*/FwdataOut=$fwdatafile/" PromoteSubentries.bak > PromoteSubentries.ini
-./Var2Compform.pl
+mv NumberExamples.ini NumberExamples.bak
+perl -pE "s/FwdataIn.*/FwdataIn=$barefname-before.fwdata/; s/FwdataOut.*/FwdataOut=$fwdatafile/"  NumberExamples.bak > NumberExamples.ini
+./NumberExamples.pl
 zip "$backupfile" "$fwdatafile"  # 2>/dev/null
 echo
 rm $fwdatafile $barefname-before.fwdata
 echo "Work files \"$fwdatafile\" & \"$barefname-before.fwdata\" have been deleted"
-mv PromoteSubentries.bak PromoteSubentries.ini
+mv NumberExamples.bak NumberExamples.ini
 echo
-echo "The file \"$fwdatafile\" inside \"$backupfile\" has been corrected."
+echo "The file \"$fwdatafile\" inside \"$backupfile\" has had the Examples numbered."
