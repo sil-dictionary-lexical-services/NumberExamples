@@ -1,5 +1,6 @@
 #!/usr/bin/perl
-# perl ./hackFWvariants.pl
+# You should probably use the related bash script to call this script, but you can use: 
+# perl ./NumberExamples.pl
 
 my $debug=0;
 my $checktags=0; #Stop after checking the validity of the tags
