@@ -3,7 +3,7 @@
 # perl ./NumberExamples.pl
 
 my $debug=0;
-my $checktags=0; #Stop after checking the validity of the tags
+my $checkini=1; #Stop after checking the validity of the .ini file
 
 use 5.016;
 use strict;
@@ -16,29 +16,29 @@ use open qw/:std :utf8/;
 use XML::LibXML;
 
 use Config::Tiny;
-my $configfile = 'PromoteSubentries.ini';
- # ; PromoteSubentries.ini file looks like:
- # [Var2Compform]
+my $configfile = 'NumberExamples.ini';
+ # ; NumberExamples.ini file looks like:
+ # [NumberExamples]
  # FwdataIn=FwProject-before.fwdata
  # FwdataOut=FwProject.fwdata
- # modeltag1=Model Unspecified Complex Entry
- # modifytag1=Complex_Form
- # the modeltag and modifytag lines are repeated as needed
- # numberofmodels=1
+ # NumberFieldname="Example Number"
 
-my $inisection = 'Var2Compform';
+my $inisection = 'NumberExamples';
 my $config = Config::Tiny->read($configfile, 'crlf');
 #ToDo: should also use Getopt::Long instead of setting variables as above
 #ToDo: get the pathname of the INI file from $0 so that the two go together
 die "Couldn't find the INI file:$configfile\nQuitting" if !$config;
 my $infilename = $config->{$inisection}->{FwdataIn};
 my $outfilename = $config->{$inisection}->{FwdataOut};
+my $numberfieldname = $config->{$inisection}->{NumberFieldname};
 
 my $lockfile = $infilename . '.lock' ;
 die "A lockfile exists: $lockfile\
 Don't run $0 when FW is running.\
 Run it on a copy of the project, not the original!\
 I'm quitting" if -f $lockfile ;
+
+die "config:". Dumper($config) if $checkini;
 
 my $modelmax= $config->{$inisection}->{numberofmodels};
 die "numberofmodels not specified" if !defined $modelmax;
@@ -96,7 +96,6 @@ for ($modelcount =1; $modelcount <=$modelmax; $modelcount++) {
 		}
 	}
 
-die "config:". Dumper($config) if $checktags;
 say "Processing fwdata file: $infilename";
 
 my $fwdatatree = XML::LibXML->load_xml(location => $infilename);
