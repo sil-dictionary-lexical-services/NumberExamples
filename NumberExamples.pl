@@ -63,7 +63,7 @@ foreach my $ExampleNumNode (@ExampleNumNodes) {
 	say STDERR 'Found sense', rtheader($LexSensert) if $debug;
 	my @prevsentences = $LexSensert->findnodes( q#./Examples/objsur[@guid="# . $LexExampleSentenceguid . q#"]/preceding-sibling::*# );
 	# index-of in Xpath2 is nicer 
-	my $index = scalar ( @prevsentences ) +1 if $debug;
+	my $index = scalar ( @prevsentences ) +1;
 	say "index $index" if $debug;
 	$ExampleNumNode->setAttribute('val', $index);
 	}
@@ -77,7 +77,6 @@ say "";
 say "Finished processing, writing modified  $outfilename" ;
 open my $out_fh, '>:raw', $outfilename;
 print {$out_fh} $xmlstring;
-
 
 # Subroutines
 sub rtheader { # dump the <rt> part of the record
