@@ -1,9 +1,6 @@
 #!/usr/bin/perl
 # You should probably use the related bash script to call this script, but you can use: 
-# perl ./NumberExamples.pl
-
-my $debug=0;
-my $checkini=0; #Stop after checking the validity of the .ini file
+my $USAGE = "Usage: $0 [--configfile NumberExamples.ini] [--section NumberExamples] [--debug] [--checkini]";
 
 use 5.016;
 use strict;
@@ -15,18 +12,26 @@ use utf8;
 use open qw/:std :utf8/;
 use XML::LibXML;
 
+use File::Basename;
+my $scriptname = fileparse($0, qr/\.[^.]*/); # script name without the .pl
+
+use Getopt::Long;
+GetOptions (
+	'configfile:s'   => \(my $configfile = "$scriptname.ini"), # ini filename
+	'section:s'   => \(my $inisection = "NumberExamples"), # section of ini file to use
+	'debug'       => \(my $debug = 0),
+	'checkini'       => \(my $checkini = 0),
+	) or die $USAGE;
+
 use Config::Tiny;
-my $configfile = 'NumberExamples.ini';
  # ; NumberExamples.ini file looks like:
  # [NumberExamples]
  # FwdataIn=FwProject-before.fwdata
  # FwdataOut=FwProject.fwdata
  # NumberFieldname="Example Number"
 
-my $inisection = 'NumberExamples';
 my $config = Config::Tiny->read($configfile, 'crlf');
-#ToDo: should also use Getopt::Long instead of setting variables as above
-#ToDo: get the pathname of the INI file from $0 so that the two go together
+
 die "Couldn't find the INI file:$configfile\nQuitting" if !$config;
 my $infilename = $config->{$inisection}->{FwdataIn};
 my $outfilename = $config->{$inisection}->{FwdataOut};
