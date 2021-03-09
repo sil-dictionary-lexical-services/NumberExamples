@@ -59,6 +59,7 @@ my @ExampleNumNodes = $fwdatatree->findnodes(q#//Custom[@name='# . $numberfieldn
 
 die "No Custom $numberfieldname fields" unless @ExampleNumNodes;
 
+my $examplecount = 0;
 foreach my $ExampleNumNode (@ExampleNumNodes) {
 	my ($LexExampleSentencert) = $ExampleNumNode->findnodes(q#./ancestor::rt#);
 	my $LexExampleSentenceguid = $LexExampleSentencert->getAttribute('guid');
@@ -71,8 +72,10 @@ foreach my $ExampleNumNode (@ExampleNumNodes) {
 	my $index = scalar ( @prevsentences ) +1;
 	say "index $index" if $debug;
 	$ExampleNumNode->setAttribute('val', $index);
+	$examplecount++;
 	}
 
+say STDERR "Renumbered $examplecount examples";
 my $xmlstring = $fwdatatree->toString;
 # Some miscellaneous Tidying differences
 $xmlstring =~ s#><#>\n<#g;
