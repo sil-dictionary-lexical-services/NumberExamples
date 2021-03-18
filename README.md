@@ -73,7 +73,7 @@ In **WSL**, type:
 
 ​	**./NumberExamples.sh** 
 
-That script will extract the *.fwdata* file from the backup. It then funs the **NumberExamples.pl** script to number the examples in the custom field
+That script will extract the *.fwdata* file from the backup. It then runs the **NumberExamples.pl** script to number the examples in the custom field
 
 You can run FLEx and restore the project from the backup to verify that the Examples are numbered.
 
@@ -93,15 +93,13 @@ In cases where there's no ambiguity e.g. *Aklatɔ Asʋ́n* (*ʋ́* has no Unicod
 
 #### The Numbering is not permanent
 
-FLEx doesn't know about the Example Numberin, so If you re-order or delete or create examples, the Numbers will no longer be in order. You can re-run the script.
-
-
+FLEx doesn't know about the Example Numbering, so If you re-order or delete or create examples, the Numbers will no longer be in order. You can re-run the script.
 
 
 
 
 ***
 
-This repository was initialized with Var2Form scripts the Subentry Promotion repo as a template for processing a .fwdata file within a FLEx backup/zip file.
+This repository was initialized with Var2Form scripts the Subentry Promotion repo as a template for processing a *.fwdata* file within a FLEx backup/zip file.
 
 The scripts were originally written and tested with Nkonya language test database, but there's nothing special about that database with regards to this process.
